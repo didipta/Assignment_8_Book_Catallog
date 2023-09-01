@@ -13,7 +13,7 @@ const createoder = catchAsync(async (req: Request, res: Response) => {
   let id;
   const token = req.headers.authorization;
 
-  if (userId !== null) {
+  if (userId !== undefined) {
     id = userId;
   } else {
     if (!token) {
