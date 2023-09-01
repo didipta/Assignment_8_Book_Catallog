@@ -13,9 +13,6 @@ const insertIntoDB = async (data: Category): Promise<Category> => {
 
   const result = await prisma.category.create({
     data,
-    include: {
-      books: true,
-    },
   });
 
   return result;
@@ -30,8 +27,40 @@ const getuserFromDB = async (): Promise<Category[]> => {
   return result;
 };
 
+const categoryupdate = async (id:string, data: Category): Promise<Category> => {
+  const result = await prisma.category.update({
+    where: {
+      id: id,
+    },
+    data
+  });
+  return result;
+};
+
+const categorydelete = async (id:string): Promise<Category> => {
+  const result = await prisma.category.delete({
+    where: {
+      id: id,
+    },
+  });
+  return result;
+};
+
+const categorygetbyid = async (id:string): Promise<Category|null> => {
+  const result = await prisma.category.findFirst({
+    where: {
+      id: id,
+    },
+
+  });
+  return result;
+};
+
 
 export const Categoryservice = {
   insertIntoDB,
   getuserFromDB,
+  categorygetbyid,
+  categoryupdate,
+  categorydelete
 };
