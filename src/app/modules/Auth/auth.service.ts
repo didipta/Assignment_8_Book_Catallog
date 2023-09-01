@@ -61,7 +61,6 @@ const loginAdmin = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     {
       userId: isuserExist.id,
       role: isuserExist.role,
-      iat: Math.floor(Date.now() / 1000) - 31536000,
          },
     config.jwt_secret as Secret,
     config.jwt_expires_in as string

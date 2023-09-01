@@ -13,7 +13,7 @@ router.post(
 );
 router.get('/:id/category', Bookcontroller.getcategorybookFromDB);
 router.get('/:id', Bookcontroller.singlebook);
-router.put('/:id', Bookcontroller.bookupdate);
+router.patch('/:id', Bookcontroller.bookupdate);
 router.delete('/:id', Bookcontroller.bookdelete);
 
 export const bookroutes = router;

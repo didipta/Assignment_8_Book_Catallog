@@ -12,7 +12,7 @@ router.post(
   Categorycontroller.insertFromDB
 );
 router.get('/:id', Categorycontroller.categorygetbyid);
-router.put('/:id', Categorycontroller.categoryupdate);
+router.patch('/:id', Categorycontroller.categoryupdate);
 router.delete('/:id', Categorycontroller.categorydelete);
 
 export const categoryroutes = router;

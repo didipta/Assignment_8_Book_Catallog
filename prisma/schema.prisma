@@ -50,7 +50,7 @@ model Book {
   category        Category              @relation(fields: [categoryId], references: [id])
   categoryId      String
   reviews         ReviewAndRating[]
-  orderedBooks    OrderedBooks?
+  orderedBooks    OrderedBooks[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -73,7 +73,7 @@ model ReviewAndRating {
 model OrderedBooks{
   id String @id @default(uuid())
   book Book @relation(fields: [bookId], references: [id])
-  bookId String @unique
+  bookId String  
   quantity Int
   order Order @relation(fields: [orderId], references: [id])
   orderId String
