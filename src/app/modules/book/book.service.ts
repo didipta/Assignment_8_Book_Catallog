@@ -85,9 +85,41 @@ const getuserFromDB = async (
   };
 };
 
+const singlebook = async (id: string): Promise<Iuser> => {
+  const result = await prisma.book.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      reviews: true,
+    },
+  });
+  return result;
+};
 
+const bookupdate = async (id: string, data: Book): Promise<Book> => {
+  data.publicationDate = new Date(data.publicationDate);
+  const result = await prisma.book.update({
+    where: {
+      id: id,
+    },
+    data,
+  });
+  return result;
+};
+const bookdelete = async (id: string): Promise<Book> => {
+  const result = await prisma.book.delete({
+    where: {
+      id: id,
+    },
+  });
+  return result;
+};
 
 export const Bookservice = {
   insertIntoDB,
   getuserFromDB,
+  singlebook,
+  bookupdate,
+  bookdelete,
 };
