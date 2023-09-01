@@ -1,21 +1,25 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
+import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
-import { Categoryservice } from './category.service';
+import { bookSearchableFields } from './book.interface';
+import { Bookservice } from './book.service';
 
 const insertFromDB = catchAsync(async (req: Request, res: Response) => {
-  const result = await Categoryservice.insertIntoDB(req.body);
+  const result = await Bookservice.insertIntoDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'category Insert Successfully',
+    message: 'Book Insert Successfully',
     data: result,
   });
 });
 
 const getuserFromDB = catchAsync(async (req: Request, res: Response) => {
-  const data = await Categoryservice.getuserFromDB();
+  const filters = pick(req.query, bookSearchableFields);
+  const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+  const data = await Bookservice.getuserFromDB(filters, options);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -24,7 +28,7 @@ const getuserFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-export const Categorycontroller = {
+export const Bookcontroller = {
   insertFromDB,
   getuserFromDB,
 };

@@ -1,9 +1,9 @@
 import express from 'express';
-import { Categorycontroller } from './category.controller';
+import { Bookcontroller } from './book.controller';
 
 const router = express.Router();
 
-router.get('/', Categorycontroller.getuserFromDB);
-router.post('/', Categorycontroller.insertFromDB);
+router.get('/', Bookcontroller.getuserFromDB);
+router.post('/', Bookcontroller.insertFromDB);
 
-export const categoryroutes = router;
+export const bookroutes = router;

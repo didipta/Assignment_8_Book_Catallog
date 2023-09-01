@@ -6,6 +6,9 @@ import { userservice } from './user.service';
 
 const insertFromDB = catchAsync(async (req: Request, res: Response) => {
   const result = await userservice.insertIntoDB(req.body);
+
+  
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -16,6 +19,7 @@ const insertFromDB = catchAsync(async (req: Request, res: Response) => {
 
 const getuserFromDB = catchAsync(async (req: Request, res: Response) => {
   const data = await userservice.getuserFromDB();
+  
   console.log('🐱‍🏍 getuserFromDB ~~', { data });
   sendResponse(res, {
     statusCode: httpStatus.OK,
