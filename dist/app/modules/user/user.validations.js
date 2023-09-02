@@ -43,6 +43,22 @@ const create = zod_1.z.object({
             .max(255),
     }),
 });
+const loging = zod_1.z.object({
+    body: zod_1.z.object({
+        email: zod_1.z
+            .string({
+            required_error: 'Email is required',
+        })
+            .email(),
+        password: zod_1.z
+            .string({
+            required_error: 'Password is required',
+        })
+            .min(6)
+            .max(255),
+    }),
+});
 exports.userValidations = {
     create,
+    loging,
 };

@@ -14,7 +14,7 @@ const router = express_1.default.Router();
 //   validateRequest(uservalidation),
 //   UserController.createUser
 // );
-router.post('/signin', auth_controller_1.authController.signin);
+router.post('/signin', (0, validateRequest_1.default)(user_validations_1.userValidations.loging), auth_controller_1.authController.signin);
 router.post('/signup', (0, validateRequest_1.default)(user_validations_1.userValidations.create), auth_controller_1.authController.signup);
 // router.post(
 //   '/refresh-token',

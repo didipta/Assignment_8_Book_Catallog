@@ -44,7 +44,7 @@ const create = z.object({
 });
 
 
-export const loging= z.object({
+const loging= z.object({
   body: z.object({
     email: z
       .string({
