@@ -12,7 +12,11 @@ const router = express.Router();
 //   UserController.createUser
 // );
 
-router.post('/signin', authController.signin);
+router.post(
+  '/signin',
+  validateRequest(userValidations.loging),
+  authController.signin
+);
 router.post(
   '/signup',
   validateRequest(userValidations.create),
