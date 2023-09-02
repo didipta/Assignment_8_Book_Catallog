@@ -27,12 +27,12 @@ const insertIntoDB = async (data: Book): Promise<Book> => {
   return result;
 };
 
-const getuserFromDB = async (
+const getbookFromDB = async (
   filters: IBookfilter,
   options: IPaginationOptions
 ): Promise<IGenericResponse<Book[]>> => {
   const { limit, page, skip } = paginationHelpers.calculatePagination(options);
-  const { searchTerm, ...filterData } = filters;
+  const { searchTerm, minPrice, maxPrice, ...filterData } = filters;
 
   const andConditions = [];
 
@@ -44,6 +44,21 @@ const getuserFromDB = async (
           mode: 'insensitive',
         },
       })),
+    });
+  }
+  if (minPrice !== undefined) {
+    andConditions.push({
+      price: {
+        gte: parseFloat(minPrice.toString()),
+      },
+    });
+  }
+
+  if (maxPrice !== undefined) {
+    andConditions.push({
+      price: {
+        lte: parseFloat(maxPrice.toString()),
+      },
     });
   }
   if (Object.keys(filterData).length > 0) {
@@ -118,7 +133,7 @@ const bookdelete = async (id: string): Promise<Book> => {
 
 export const Bookservice = {
   insertIntoDB,
-  getuserFromDB,
+  getbookFromDB,
   singlebook,
   bookupdate,
   bookdelete,

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { Role } from './user.constants';
 
 const create = z.object({
   body: z.object({
@@ -8,7 +9,6 @@ const create = z.object({
       })
       .min(2)
       .max(255),
-      
 
     email: z
       .string({
@@ -21,12 +21,7 @@ const create = z.object({
       })
       .min(6)
       .max(255),
-    role: z
-      .string({
-        required_error: 'Role is required',
-      })
-      .min(2)
-      .max(255),
+    role: z.enum([...Role] as [string, ...string[]]),
     contactNo: z
       .string({
         required_error: 'Contact No is required',
@@ -45,16 +40,10 @@ const create = z.object({
       })
       .min(2)
       .max(255),
-    reviews: z.object({
-      syncId: z
-        .string({
-          required_error: 'Sync Id is required',
-        })
-        .min(2)
-        .max(255),
-    }),
-    orders: z.object({
-      syncId: z.string().min(2).max(255),
-    }),
   }),
 });
+
+export const userValidations = {
+  create,
+};
+

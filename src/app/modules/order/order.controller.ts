@@ -34,7 +34,14 @@ const createoder = catchAsync(async (req: Request, res: Response) => {
 });
 
 const allgetorder = catchAsync(async (req: Request, res: Response) => {
-  const result = await Orderservice.allgetorder();
+  const token = req.headers.authorization;
+  if (!token) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+  }
+  // verify token
+  let verifiedUser = null;
+  verifiedUser = jwtHelpers.verifyToken(token, config.jwt_secret as Secret);
+  const result = await Orderservice.allgetorder(verifiedUser);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -44,8 +51,16 @@ const allgetorder = catchAsync(async (req: Request, res: Response) => {
 });
 
 const singleorder = catchAsync(async (req: Request, res: Response) => {
+   const token = req.headers.authorization;
+   if (!token) {
+     throw new ApiError(httpStatus.UNAUTHORIZED, 'You are not authorized');
+   }
+   // verify token
+   let verifiedUser = null;
+   verifiedUser = jwtHelpers.verifyToken(token, config.jwt_secret as Secret);
   const { id } = req.params;
-  const result = await Orderservice.singleorder(id);
+  
+  const result = await Orderservice.singleorder(id, verifiedUser);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

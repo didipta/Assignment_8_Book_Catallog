@@ -9,4 +9,3 @@ export type Iuser = {
   createdAt: Date;
   updatedAt: Date;
 };
-

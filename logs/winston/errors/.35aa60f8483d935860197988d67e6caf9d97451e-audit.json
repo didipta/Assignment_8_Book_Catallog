@@ -74,6 +74,16 @@
             "date": 1693584002430,
             "name": "D:\\programming hero level-2\\Assignment_8_book\\logs\\winston\\errors\\phu-2023-01-09-22-error.log",
             "hash": "cfe72060616b75ba58236171d377c465fc407f7d6333cc81b3373eafe2135213"
+        },
+        {
+            "date": 1693625130961,
+            "name": "D:\\programming hero level-2\\Assignment_8_book\\logs\\winston\\errors\\phu-2023-02-09-09-error.log",
+            "hash": "2495f1f6e9fcc5bb10d48338b396db0bff7090c7d6ddc561d5978d07fbdb7bae"
+        },
+        {
+            "date": 1693627207411,
+            "name": "D:\\programming hero level-2\\Assignment_8_book\\logs\\winston\\errors\\phu-2023-02-09-10-error.log",
+            "hash": "a39f514a289d035d205928ad622605d99733cfdbea78be15cce049fa421287d5"
         }
     ],
     "hashType": "sha256"

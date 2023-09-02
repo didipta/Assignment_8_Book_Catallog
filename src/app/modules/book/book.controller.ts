@@ -16,12 +16,11 @@ const insertFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getuserFromDB = catchAsync(async (req: Request, res: Response) => {
+const getbookFromDB = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, bookSearchableFields);
   const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
 
-  console.log('🐱‍🏍 getuserFromDB ~~', { filters, options });
-  const data = await Bookservice.getuserFromDB(filters, options);
+  const data = await Bookservice.getbookFromDB(filters, options);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -35,7 +34,7 @@ const getcategorybookFromDB = catchAsync(
     const { id } = req.params;
     const filters = { categoryId: id };
     const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
-    const results = await Bookservice.getuserFromDB(filters, options);
+    const results = await Bookservice.getbookFromDB(filters, options);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -80,7 +79,7 @@ const bookdelete = catchAsync(async (req: Request, res: Response) => {
 
 export const Bookcontroller = {
   insertFromDB,
-  getuserFromDB,
+  getbookFromDB,
   getcategorybookFromDB,
   singlebook,
   bookupdate,

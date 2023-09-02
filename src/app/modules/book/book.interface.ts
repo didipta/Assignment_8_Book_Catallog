@@ -6,6 +6,8 @@ export type IBookfilter = {
   genre?: string | undefined;
   publicationDate?: Date | undefined;
   categoryId?: string | undefined;
+  minPrice?: number | undefined;
+  maxPrice?: number | undefined;
 };
 
 export const bookSearchableFields: string[] = [
@@ -15,4 +17,6 @@ export const bookSearchableFields: string[] = [
   'genre',
   'publicationDate',
   'categoryId',
+  'minPrice',
+  'maxPrice',
 ];

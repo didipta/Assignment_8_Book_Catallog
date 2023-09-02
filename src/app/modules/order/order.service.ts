@@ -19,29 +19,63 @@ const ordercreate = async (
   return result;
 };
 
-const allgetorder = async (): Promise<Order[]> => {
-  const result = await prisma.order.findMany({
-    include: {
-      orderedBooks: {
-        include: {
-          book: true,
+const allgetorder = async (user: any): Promise<Order[]> => {
+  if (user.role === 'admin') {
+    const result = await prisma.order.findMany({
+      include: {
+        orderedBooks: {
+          include: {
+            book: true,
+          },
         },
       },
-    },
-  });
-  return result;
+    });
+    return result;
+  }
+  if (user.role === 'customer') {
+    const result = await prisma.order.findMany({
+      where: {
+        userId: user.userId,
+      },
+      include: {
+        orderedBooks: {
+          include: {
+            book: true,
+          },
+        },
+      },
+    });
+    return result;
+  } else {
+    return [];
+  }
 };
 
-const singleorder = async (id: string): Promise<Order | null> => {
-  const result = await prisma.order.findUnique({
-    where: {
-      id: id,
-    },
-    include: {
-      orderedBooks: true,
-    },
-  });
-  return result;
+const singleorder = async (id: string, user: any): Promise<Order | null> => {
+  if (user.role === 'admin') {
+    const result = await prisma.order.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        orderedBooks: true,
+      },
+    });
+    return result;
+  } else if (user.role === 'customer') {
+    const result = await prisma.order.findUnique({
+      where: {
+        id: id,
+        userId: user.userId,
+      },
+      include: {
+        orderedBooks: true,
+      },
+    });
+    return result;
+  } else {
+    return null;
+  }
 };
 
 export const Orderservice = {
