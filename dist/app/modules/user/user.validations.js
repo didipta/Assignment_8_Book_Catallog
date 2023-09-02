@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.userValidations = void 0;
 const zod_1 = require("zod");
+const user_constants_1 = require("./user.constants");
 const create = zod_1.z.object({
     body: zod_1.z.object({
         name: zod_1.z
@@ -20,12 +22,7 @@ const create = zod_1.z.object({
         })
             .min(6)
             .max(255),
-        role: zod_1.z
-            .string({
-            required_error: 'Role is required',
-        })
-            .min(2)
-            .max(255),
+        role: zod_1.z.enum([...user_constants_1.Role]),
         contactNo: zod_1.z
             .string({
             required_error: 'Contact No is required',
@@ -44,16 +41,8 @@ const create = zod_1.z.object({
         })
             .min(2)
             .max(255),
-        reviews: zod_1.z.object({
-            syncId: zod_1.z
-                .string({
-                required_error: 'Sync Id is required',
-            })
-                .min(2)
-                .max(255),
-        }),
-        orders: zod_1.z.object({
-            syncId: zod_1.z.string().min(2).max(255),
-        }),
     }),
 });
+exports.userValidations = {
+    create,
+};

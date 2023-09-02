@@ -100,7 +100,7 @@ const getbookFromDB = async (
   };
 };
 
-const singlebook = async (id: string): Promise<Iuser> => {
+const singlebook = async (id: string): Promise<Book | null> => {
   const result = await prisma.book.findUnique({
     where: {
       id: id,

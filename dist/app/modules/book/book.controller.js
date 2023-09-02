@@ -12,85 +12,80 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.usercontroller = void 0;
+exports.Bookcontroller = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
+const pick_1 = __importDefault(require("../../../shared/pick"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
-const user_service_1 = require("./user.service");
-const jwtHelpers_1 = require("../../../helpers/jwtHelpers");
-const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
-const config_1 = __importDefault(require("../../../config"));
+const book_interface_1 = require("./book.interface");
+const book_service_1 = require("./book.service");
 const insertFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield user_service_1.userservice.insertIntoDB(req.body);
+    const result = yield book_service_1.Bookservice.insertIntoDB(req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'User Insert Successfully',
+        message: 'Book Insert Successfully',
         data: result,
     });
 }));
-const getuserFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield user_service_1.userservice.getuserFromDB();
-    console.log('🐱‍🏍 getuserFromDB ~~', { data });
+const getbookFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const filters = (0, pick_1.default)(req.query, book_interface_1.bookSearchableFields);
+    const options = (0, pick_1.default)(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+    const data = yield book_service_1.Bookservice.getbookFromDB(filters, options);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'user data',
+        message: 'category data',
         data,
     });
 }));
-const sigleuser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getcategorybookFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield user_service_1.userservice.sigleuser(id);
+    const filters = { categoryId: id };
+    const options = (0, pick_1.default)(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+    const results = yield book_service_1.Bookservice.getbookFromDB(filters, options);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'user get Successfully',
-        data: result,
+        message: 'Books with associated category data fetched successfully',
+        data: results,
     });
 }));
-const userupdate = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const singlebook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield user_service_1.userservice.userupdate(id, req.body);
+    const result = yield book_service_1.Bookservice.singlebook(id);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'user update Successfully',
+        message: 'Book fetched successfully',
         data: result,
     });
 }));
-const userdelete = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const bookupdate = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield user_service_1.userservice.userdelete(id);
+    const result = yield book_service_1.Bookservice.bookupdate(id, req.body);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'user delete Successfully',
+        message: 'Book updated successfully',
         data: result,
     });
 }));
-const profile = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.headers.authorization;
-    if (!token) {
-        throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'You are not authorized');
-    }
-    // verify token
-    let verifiedUser = null;
-    verifiedUser = jwtHelpers_1.jwtHelpers.verifyToken(token, config_1.default.jwt_secret);
-    const id = verifiedUser.userId;
-    const result = yield user_service_1.userservice.profile(id);
+const bookdelete = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield book_service_1.Bookservice.bookdelete(id);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'user get Successfully',
+        message: 'Book deleted successfully',
         data: result,
     });
 }));
-exports.usercontroller = {
-    getuserFromDB,
+exports.Bookcontroller = {
     insertFromDB,
-    sigleuser,
-    userupdate,
-    userdelete,
-    profile
+    getbookFromDB,
+    getcategorybookFromDB,
+    singlebook,
+    bookupdate,
+    bookdelete,
 };
